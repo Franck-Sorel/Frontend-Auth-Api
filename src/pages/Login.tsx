@@ -11,7 +11,7 @@ export default function Login() {
   const toast = useToast();
   const config = new Configuration({
     basePath:
-      "https://authapi-production-ab50.up.railway.app/swagger-ui",
+      "https://authapi-production-ab50.up.railway.app/",
   });
 
   const api = new AuthApi(config);
