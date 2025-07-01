@@ -66,7 +66,8 @@ export default function Register() {
       <form onSubmit={handleSubmit}>
         <div className="form-wave">
           <input
-            name="firstName"
+            name="Name"
+            type="text"
             required
             value={form.firstName}
             onChange={handleChange}
@@ -81,6 +82,7 @@ export default function Register() {
         <div className="form-wave">
           <input
             name="lastName"
+            type="text"
             required
             value={form.lastName}
             onChange={handleChange}
