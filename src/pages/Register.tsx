@@ -4,6 +4,9 @@ import { AuthApi, Configuration, type RegisterRequest } from "../ts-client";
 import Layout from "../components/Layout";
 import { useToast } from "../components/ToastProvider";
 
+// Simple email format regex
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 export default function Register() {
   const [form, setForm] = useState<RegisterRequest>({
     email: "",
@@ -15,19 +18,26 @@ export default function Register() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const toast = useToast();
+
   const config = new Configuration({
-    basePath:
-      "https://authapi-production-ab50.up.railway.app",
+    basePath: "https://authapi-production-ab50.up.railway.app",
   });
 
   const api = new AuthApi(config);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+    setError(""); // Clear error when user types
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!emailRegex.test(form.email)) {
+      setError("Please enter a valid email address.");
+      return;
+    }
+
     try {
       await api.register(form);
       toast("Registration complete! 🎉");
@@ -67,6 +77,7 @@ export default function Register() {
             }}
           />
         </div>
+
         <div className="form-wave">
           <input
             name="lastName"
@@ -80,9 +91,11 @@ export default function Register() {
             }}
           />
         </div>
+
         <div className="form-wave">
           <input
             name="email"
+            type="email"
             required
             value={form.email}
             onChange={handleChange}
@@ -93,6 +106,7 @@ export default function Register() {
             }}
           />
         </div>
+
         <div className="form-wave">
           <input
             name="password"
@@ -107,9 +121,12 @@ export default function Register() {
             }}
           />
         </div>
+
         <button type="submit">Register</button>
+
         {error && <p style={{ color: "red" }}>{error}</p>}
       </form>
+
       <p>
         Already have an account? <Link to="/login">Login</Link>
       </p>
