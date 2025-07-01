@@ -17,7 +17,7 @@ export default function Register() {
   const toast = useToast();
   const config = new Configuration({
     basePath:
-      "https://authapi-production-ab50.up.railway.app/",
+      "https://authapi-production-ab50.up.railway.app",
   });
 
   const api = new AuthApi(config);
