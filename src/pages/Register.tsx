@@ -6,6 +6,8 @@ import { useToast } from "../components/ToastProvider";
 
 // Simple email format regex
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const passwordRegex =
+  /^(?=.*[A-Z])(?=(?:.*[!@#$%^&*()_\-+=\[\]{};':"\\|,.<>/?]){2,}).{8,}$/;
 
 export default function Register() {
   const [form, setForm] = useState<RegisterRequest>({
@@ -37,6 +39,13 @@ export default function Register() {
       setError("Please enter a valid email address.");
       return;
     }
+
+    if (!passwordRegex.test(form.password)) {
+      setError(
+        "Password must be at least 8 characters, include 1 uppercase letter, and 2 special characters." // 🔹
+      ); 
+      return; 
+    } 
 
     try {
       await api.register(form);
