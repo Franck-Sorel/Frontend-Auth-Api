@@ -76,7 +76,6 @@ export default function Register() {
         <div className="form-wave">
           <input
             name="Name"
-            type="text"
             required
             value={form.firstName}
             onChange={handleChange}
